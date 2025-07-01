@@ -3,54 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tabbed Links</title>
+  <title>Digic Employee Portal</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f2f2;
+    :root {
+      --primary: #4A90E2;
+      --hover: #357ABD;
+      --bg: #f0f4f8;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --text: #333;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #dfefff, #f0f4f8);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      padding: 2rem;
     }
 
     h1 {
-      color: #333;
-      margin-bottom: 40px;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--text);
+      margin-bottom: 2rem;
+      text-align: center;
     }
 
     .tab-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 1.5rem;
       justify-content: center;
+      max-width: 800px;
+      width: 100%;
     }
 
     .tab {
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 1.5rem 2rem;
       text-decoration: none;
-      background-color: #4A90E2;
-      color: white;
-      padding: 30px 50px;
-      font-size: 1.5em;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-      min-width: 200px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      font-size: 1.25rem;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      flex: 1 1 250px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
     .tab:hover {
-      background-color: #357ABD;
+      background-color: var(--primary);
+      color: #fff;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
     }
 
     @media (max-width: 600px) {
       .tab {
-        width: 100%;
-        padding: 20px;
-        font-size: 1.2em;
+        padding: 1.2rem 1rem;
+        font-size: 1rem;
       }
     }
   </style>
@@ -58,10 +80,10 @@
 <body>
   <h1>Welcome to Digic Employee Portal</h1>
   <div class="tab-container">
-    <a href="https://docs.google.com/spreadsheets/u/1/d/1cgzhlBrAgQ1pmxrf4c8SCfuXn_aFAP83QbB908km0QI/htmlview" class="tab">Sold Customers Data</a>
-  <!-- <a href="#" class="tab"></a>
-    <a href="#" class="tab"></a>
-    <a href="#" class="tab"></a>-->
+    <a href="https://docs.google.com/spreadsheets/u/1/d/1cgzhlBrAgQ1pmxrf4c8SCfuXn_aFAP83QbB908km0QI/htmlview" class="tab" target="_blank">
+      Sold Customers Data
+    </a>
+    <!-- Add more tabs here if needed -->
   </div>
 </body>
 </html>
