@@ -27,7 +27,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       padding: 2rem;
     }
 
@@ -61,6 +60,7 @@
       transition: all 0.3s ease;
       flex: 1 1 250px;
       text-align: center;
+      cursor: pointer;
     }
 
     .tab:hover {
@@ -70,21 +70,15 @@
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
     }
 
-    @media (max-width: 600px) {
-      .tab {
-        padding: 1.2rem 1rem;
-        font-size: 1rem;
-      }
-    }
-
-    .link-generator {
+    .section {
+      display: none;
       background: var(--card-bg);
       padding: 2rem;
       border-radius: var(--radius);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 500px;
       width: 100%;
+      max-width: 600px;
+      margin-top: 2rem;
       backdrop-filter: blur(8px);
     }
 
@@ -112,42 +106,97 @@
       background-color: var(--hover);
     }
 
-    .link-generator #output {
+    #output {
       margin-top: 1rem;
       font-weight: bold;
       color: var(--primary);
       word-break: break-all;
     }
+
+    .link-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .link-row span {
+      color: #0077cc;
+      font-size: 1rem;
+      word-break: break-all;
+    }
+
+    .link-row button {
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .link-row button:hover {
+      background-color: var(--hover);
+    }
   </style>
 </head>
 <body>
+
   <h1>Welcome to Digic Employee Portal</h1>
 
   <div class="tab-container">
-    <a href="https://docs.google.com/spreadsheets/u/1/d/1cgzhlBrAgQ1pmxrf4c8SCfuXn_aFAP83QbB908km0QI/htmlview" class="tab" target="_blank">
-      Sold Customers Data
-    </a>
-    <a href="https://trello.com/b/b6H8lNvn/digic" class="tab" target="_blank">
-      Task Board
-    </a>
-    <a href="https://drive.google.com/drive/folders/1ix_ySb0lCDDQcGWTj_mfYCB8GRPLwUw1?usp=drive_link" class="tab" target="_blank">
-      DIGIC Drive
-    </a>
+    <a href="https://docs.google.com/spreadsheets/u/1/d/1cgzhlBrAgQ1pmxrf4c8SCfuXn_aFAP83QbB908km0QI/htmlview" class="tab" target="_blank">Sold Customers Data</a>
+    <a href="https://trello.com/b/b6H8lNvn/digic" class="tab" target="_blank">Task Board</a>
+    <a href="https://drive.google.com/drive/folders/1ix_ySb0lCDDQcGWTj_mfYCB8GRPLwUw1?usp=drive_link" class="tab" target="_blank">DIGIC Drive</a>
+    <div class="tab" onclick="toggleSection('generatorSection')">Link Generator</div>
+    <div class="tab" onclick="toggleSection('copySection')">Copy Links</div>
   </div>
 
-  <div class="link-generator">
+  <!-- Link Generator Section -->
+  <div id="generatorSection" class="section link-generator">
     <h2>Generate DigicCard Link</h2>
     <input type="text" id="username" placeholder="Enter ID (e.g. mhdfavas01)" oninput="generateLink()" />
     <br />
-    <button onclick="copyLink()">Copy Link</button>
+    <button onclick="copyGeneratedLink()">Copy Link</button>
     <div id="output"></div>
   </div>
 
+  <!-- Copy Static Links Section -->
+  <div id="copySection" class="section">
+    <h2>Copy Links</h2>
+    <div class="link-row">
+      <span id="link1">https://www.instagram.com/digic_india?igsh=MTMyNGV5OWpmNnIxbw==</span>
+      <button onclick="copyLink('link1')">Insta Link Copy</button>
+    </div>
+    <div class="link-row">
+      <span id="link2">https://example.com/user2</span>
+      <button onclick="copyLink('link2')">Copy</button>
+    </div>
+    <div class="link-row">
+      <span id="link3">https://example.com/user3</span>
+      <button onclick="copyLink('link3')">Copy</button>
+    </div>
+    <div class="link-row">
+      <span id="link4">https://example.com/user4</span>
+      <button onclick="copyLink('link4')">Copy</button>
+    </div>
+    <div class="link-row">
+      <span id="link5">https://example.com/user5</span>
+      <button onclick="copyLink('link5')">Copy</button>
+    </div>
+  </div>
+
   <script>
+    function toggleSection(id) {
+      document.getElementById('generatorSection').style.display = 'none';
+      document.getElementById('copySection').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
     function generateLink() {
       const username = document.getElementById('username').value.trim();
       const output = document.getElementById('output');
-
       if (username) {
         output.textContent = `https://www.digiccard.com/${username}`;
       } else {
@@ -155,20 +204,24 @@
       }
     }
 
-    function copyLink() {
+    function copyGeneratedLink() {
       const text = document.getElementById('output').textContent;
-
       if (!text) {
-        alert("Please enter a value first!");
+        alert("Please enter an ID first!");
         return;
       }
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied: " + text))
+        .catch(err => alert("Failed to copy: " + err));
+    }
 
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Link copied to clipboard!");
-      }).catch(err => {
-        alert("Failed to copy link: " + err);
-      });
+    function copyLink(id) {
+      const text = document.getElementById(id).textContent + " LINK";
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied: " + text))
+        .catch(err => alert("Failed to copy: " + err));
     }
   </script>
+
 </body>
 </html>
